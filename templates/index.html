@@ -7,9 +7,15 @@
 <body>
 <h2>HEllo</h2>
 {% for scrap in scraps %}
-    <li>{{ scrap.title }}</li>
-    <li>{{ scrap.news }}</li>
-<br>
+    <table>
+        <tr>
+            <th>{{ scrap.title }}</th>
+        </tr>
+        <tr>
+            <td>{{ scrap.news }}</td>
+        </tr>
+    </table>
+    <br>
 {% endfor %}
 </body>
 </html>

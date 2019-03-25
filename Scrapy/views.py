@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from django.views import View
 
 from Scrapy.models import NewsScrapy
+import re
 
 
 class Index(View):
@@ -17,11 +18,12 @@ class Index(View):
 
         a_tags = homepage_parsed.find_all('a')
         links = set()
+
         # a_tags is list of dictionary form
         for a_tag in a_tags:
             # print(a_tag.get('href'))
             # link = a_tag.get('href', '')
-            if '/2019/03/' in a_tag.get('href', ''):
+            if '/2019/03/24/' in a_tag.get('href', ''):
                 # print("link success")
                 links.add(a_tag.get('href'))
                 # links.add(link)
@@ -34,14 +36,17 @@ class Index(View):
             title = single_news_parsed.find('h1').text
             print(title)
             nc = single_news_parsed.find('div', {'class': 'entry-content'})
-            news = nc.find_all('p')
-            print(news)
+            ppp = nc.find_all('p')
+            lists = []
+            for i in ppp:
+                news = i.text
+                # print(news)
+                lists.append(news)
+
             newsscrapy.title = title
-            newsscrapy.news = news[0:]
+            newsscrapy.news = lists
             newsscrapy.save()
         template_content = {
             'scraps': NewsScrapy.objects.all()
         }
         return render(request, 'index.html', template_content)
-
-
