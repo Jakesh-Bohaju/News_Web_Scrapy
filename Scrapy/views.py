@@ -29,23 +29,36 @@ class Index(View):
                 # links.add(link)
 
         for link in links:
+            newsscrapy = NewsScrapy()
             single_news_request = req.get(link)
             # print(single_news_request.text)
             single_news_parsed = BeautifulSoup(single_news_request.content, "html.parser")
-            print(link)
+
             title = single_news_parsed.find('h1').text
             print(title)
             nc = single_news_parsed.find('div', {'class': 'entry-content'})
             ppp = nc.find_all('p')
+            image = nc.find_all('img')
+            a = []
+            for innn in image:
+                a.append(innn['src'])
+            a = a[1:2]
+            # print(a)
+            a = '\n'.join(a)
+            # print(a)
+
             lists = []
             for i in ppp:
                 news = i.text
-                # print(news)
+                print(news)
                 lists.append(news)
-
+            lists = '\n'.join(lists)
+            print(lists)
             newsscrapy.title = title
+            newsscrapy.image = a
             newsscrapy.news = lists
             newsscrapy.save()
+            print("=========================New post============================================================")
         template_content = {
             'scraps': NewsScrapy.objects.all()
         }
