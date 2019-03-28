@@ -1,11 +1,12 @@
+{% load thumbnail %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>News Extraction</title>
 </head>
 <body>
-<h2>HEllo</h2>
+<h2>News extraction from Nepal Health News</h2>
 {% for scrap in scraps %}
     <table>
         <tr>
@@ -15,7 +16,8 @@
         <tr>
             <td>{{ scrap.news }}</td>
             <td>
-                 <img src="{{ scrap.image }}">
+                <img height="350px" width="350px" src="{{ scrap.image }}" >
+
             </td>
         </tr>
     </table>
